@@ -3,7 +3,6 @@
 import socket
 import os
 import stat
-from contextlib import nullcontext
 from urllib.parse import unquote
 
 from threading import Thread
@@ -259,7 +258,7 @@ class HTTPServer:
 
     def teardown_socket(self):
         if self.sock is not None:
-            self.sock.shutdown()
+            self.sock.shutdown(socket.SHUT_RDWR)
             self.sock.close()
 
     def accept(self):
@@ -440,7 +439,7 @@ class HTTPServer:
         return message.encode("utf-8")
 
     # TODO: Make a function that handles not found error
-    def resource_not_found(self) -> bytes:
+    def resource_not_found(self) -> bytes | None:
         """
         Returns 404 not found status and sends back our 404.html page.
         """
@@ -457,7 +456,7 @@ class HTTPServer:
         return message
 
     # TODO: Make a function that handles forbidden error
-    def resource_forbidden(self) -> bytes:
+    def resource_forbidden(self) -> bytes | None:
         """
         Returns 403 FORBIDDEN status and sends back our 403.html page.
         """

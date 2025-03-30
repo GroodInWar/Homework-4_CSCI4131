@@ -13,7 +13,7 @@ function updateClocks() {
         // Get formatted time string
         const formatter = new Intl.DateTimeFormat('en-US', options);
         const timeString = formatter.format(new Date());
-        const [timePart, period] = timeString.split(' ');
+        const [timePart] = timeString.split(' ')[0];
         const [hours, minutes, seconds] = timePart.split(':').map(Number);
 
         // Calculate angles
